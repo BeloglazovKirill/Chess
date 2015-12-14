@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class Main extends JFrame {
 
-    private Main(){
+    private Main() {
         super("Шахматы");
         setSize(761, 800);
         add(new ChessPanel());
