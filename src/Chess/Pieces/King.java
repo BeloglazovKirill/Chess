@@ -5,20 +5,12 @@ import Chess.Location;
 
 import java.util.*;
 
-/**
- * Created by Kirill on 07.12.15.
- */
+
 public class King extends Piece {
     private boolean wasMotion = false;
-    private boolean isCheck = false;
 
     public King(boolean isWhite, Board boardState, Location loc){
         super(isWhite, boardState, loc);
-    }
-
-    @Override
-    public boolean getIsCheck() {
-        return isCheck;
     }
 
     @Override
@@ -34,8 +26,8 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Location> getMoves() {
-        List<Location> possibleMoves = new ArrayList<>();
+    public Set<Location> getMoves() {
+        Set<Location> possibleMoves = new HashSet<>();
         int x = this.loc.x;
         int y = this.loc.y;
 
@@ -82,9 +74,7 @@ public class King extends Piece {
                 }
             }
         }
-
-
-
+//        virtualMotion(possibleMoves);
         return possibleMoves;
     }
 

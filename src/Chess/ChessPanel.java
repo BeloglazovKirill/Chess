@@ -6,23 +6,18 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.*;
 
-/**
- * Created by Kirill on 09.12.15.
- */
 public class ChessPanel extends JPanel {
     private Game game;
     private int dimension;
     private Location loc1, loc2;
-    private List<Location> possibleMoves;
+    private Set<Location> possibleMoves;
     private Point point = new Point();
-    private Image blackBishop, blackKing, blackKnight, blackPawn, blackQueen, blackRook,
-            whiteBishop, whiteKing, whiteKnight, whitePawn, whiteQueen, whiteRook;
     private Map<String, Image> images = new HashMap<>();
 
     public ChessPanel() {
@@ -75,26 +70,28 @@ public class ChessPanel extends JPanel {
         }
     }
 
-    private void miniFunc1(Location loc) {
+    private void chooseLoc() {
         loc1 = new Location((int) point.getX(), (int) point.getY());
         if (!game.isEmpty(loc1)) {
             if (game.isWhiteTurn(loc1)) {
                 possibleMoves = game.getMoves(loc1);
                 repaint();
+                return;
             }
         }
+        loc1 = null;
     }
 
     private void motion(Point point) {
         if (loc1 == null) {
-            miniFunc1(loc1);
+            chooseLoc();
         } else {
             loc2 = new Location((int) point.getX(), (int) point.getY());
             if (!game.isEmpty(loc2)) {
                 if (game.getColorPiece(loc1) == game.getColorPiece(loc2)) {
                     loc1 = loc2;
                     loc2 = null;
-                    miniFunc1(loc1);
+                    chooseLoc();
                     return;
                 }
             }

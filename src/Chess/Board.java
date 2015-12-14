@@ -2,15 +2,13 @@ package Chess;
 
 import Chess.Pieces.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
 public class Board {
     private Piece[][] boardState = new Piece[8][8];
-    Board(){
+    public Board(){
         arrange();
     }
 
@@ -50,7 +48,7 @@ public class Board {
         return false;
     }
 
-    public List<Location> getMoves(Location loc){
+    public Set<Location> getMoves(Location loc){
         if (boardState[loc.x][loc.y] == null){
             return null;
         } else {
@@ -67,7 +65,6 @@ public class Board {
 
         if(virtualMotion(loc1, loc2)){
             Piece piece1 = boardState[loc1.x][loc1.y];
-            Piece piece2 = boardState[loc2.x][loc2.y];
             if (piece1 instanceof King){
                     if (loc1.x + 2 == loc2.x && loc1.y == loc2.y){
                         step(new Location(7, loc1.y), new Location(5, loc1.y));
@@ -80,7 +77,6 @@ public class Board {
             return true;
         }
         return false;
-
     }
 
     private Piece step(Location loc1, Location loc2){
@@ -97,7 +93,7 @@ public class Board {
 
 
 
-    private boolean virtualMotion(Location loc1, Location loc2){
+    public boolean virtualMotion(Location loc1, Location loc2){
         boolean color = getColorPiece(loc1);
         Piece piece = step(loc1, loc2);
         Set<Location> cellUnderAttack = cellUnderAttack(color);
@@ -106,7 +102,7 @@ public class Board {
         main_loop:
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                if (boardState[x][y] instanceof King && (boardState[x][y].getColor() != color)){
+                if (boardState[x][y] instanceof King && (boardState[x][y].getColor() == color)){
                     if (cellUnderAttack.contains(new Location(x, y))) {
                         result = false;
                         break main_loop;

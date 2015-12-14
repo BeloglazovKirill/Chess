@@ -1,8 +1,6 @@
 package Chess;
 
-/**
- * Created by Kirill on 07.12.15.
- */
+
 public class Location {
     public final int x, y;
     public Location(int x, int y){

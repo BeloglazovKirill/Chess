@@ -3,11 +3,8 @@ package Chess.Pieces;
 import Chess.Board;
 import Chess.Location;
 
-import java.util.List;
+import java.util.Set;
 
-/**
- * Created by Kirill on 07.12.15.
- */
 public abstract class Piece {
     private boolean isWhite;
     private Board boardState;
@@ -19,7 +16,7 @@ public abstract class Piece {
         this.loc = loc;
     }
 
-    public abstract List<Location> getMoves();
+    public abstract Set<Location> getMoves();
 
     public boolean isEmpty(Location loc){
         return boardState.isEmpty(loc);
@@ -45,15 +42,19 @@ public abstract class Piece {
         this.loc = loc;
     }
 
-//    protected List<Location> cellUnderAttack(boolean color){
-//        return boardState.cellUnderAttack(color);
-//    }
-
-    public boolean getIsCheck(){
-        return false;
-    }
-
     public boolean getColor(){
         return isWhite;
     }
+
+//    protected void virtualMotion(Set<Location> possibleMoves){
+//
+//        Iterator <Location> iter = possibleMoves.iterator();
+//
+//        while(iter.hasNext()){
+//            Location locTemp = iter.next();
+//            if (!boardState.virtualMotion(loc, locTemp)){
+//                iter.remove();
+//            }
+//        }
+//    }
 }

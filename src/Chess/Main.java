@@ -2,12 +2,9 @@ package Chess;
 
 import javax.swing.*;
 
-/**
- * Created by Kirill on 09.12.15.
- */
 public class Main extends JFrame {
 
-    private Main() {
+    private Main(){
         super("Шахматы");
         setSize(761, 800);
         add(new ChessPanel());

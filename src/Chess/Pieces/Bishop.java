@@ -3,8 +3,8 @@ package Chess.Pieces;
 import Chess.Board;
 import Chess.Location;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Bishop extends Piece {
@@ -13,8 +13,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Location> getMoves() {
-        ArrayList<Location> possibleMoves = new ArrayList<>();
+    public Set<Location> getMoves() {
+        Set<Location> possibleMoves = new HashSet<>();
         int x =  this.loc.x;
         int y =  this.loc.y;
         Location loc;
@@ -84,6 +84,7 @@ public class Bishop extends Piece {
                 }
             } else break;
         }
+//        virtualMotion(possibleMoves);
         return possibleMoves;
     }
 }

@@ -3,20 +3,17 @@ package Chess.Pieces;
 import Chess.Board;
 import Chess.Location;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by Kirill on 07.12.15.
- */
 public class Pawn extends Piece {
     public Pawn (boolean isWhite, Board boardState, Location loc){
         super(isWhite, boardState, loc);
     }
 
     @Override
-    public List<Location> getMoves() {
-        ArrayList<Location> possibleMoves = new ArrayList<Location>();
+    public Set<Location> getMoves() {
+        Set<Location> possibleMoves = new HashSet<>();
         int x = loc.x;
         int y = loc.y;
         Location whiteUp = new Location(x, y + 1);
@@ -78,6 +75,7 @@ public class Pawn extends Piece {
                 }
             }
         }
+//        virtualMotion(possibleMoves);
         return possibleMoves;
     }
 }

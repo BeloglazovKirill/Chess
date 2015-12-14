@@ -2,13 +2,9 @@ package Chess;
 
 import Chess.Pieces.Piece;
 
-import java.awt.*;
-import java.util.List;
-import java.util.*;
+import java.util.Set;
 
-/**
- * Created by Kirill on 07.12.15.
- */
+
 public class Game {
     private Board board;
     private boolean isWhiteTurn;
@@ -18,23 +14,15 @@ public class Game {
         isWhiteTurn = true;
     }
 
-    public boolean isGameOver(){
-
-        return false;
-    }
-
     public Piece getPiece(Location loc){
         return board.getPiece(loc);
     }
 
-//    public boolean isCheck(boolean isBlack){
-//
-//    }
     public boolean isWhiteTurn(Location loc){
         return (board.getColorPiece(loc) == isWhiteTurn);
     }
 
-    public List<Location> getMoves(Location loc){
+    public Set<Location> getMoves(Location loc){
         return board.getMoves(loc);
     }
 
@@ -49,11 +37,12 @@ public class Game {
         if (board.isEmpty(loc1)) {
             return false;
         }
-        List<Location> possibleMoves = board.getMoves(loc1);
+        Set<Location> possibleMoves = board.getMoves(loc1);
         if (possibleMoves != null && isWhiteTurn(loc1)){
             for (Location temp: possibleMoves){
                 if (temp.equals(loc2)){
                     if (board.motion(loc1, loc2)){
+//                        board.motion(loc1, loc2);
                         isWhiteTurn = !isWhiteTurn;
                         return true;
                     }
