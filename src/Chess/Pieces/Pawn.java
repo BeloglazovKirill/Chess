@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves() {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = loc.x;
         int y = loc.y;
@@ -75,7 +75,9 @@ public class Pawn extends Piece {
                 }
             }
         }
-//        virtualMotion(possibleMoves);
+        if (withVirtualMotion) {
+            virtualMotion(possibleMoves);
+        }
         return possibleMoves;
     }
 }

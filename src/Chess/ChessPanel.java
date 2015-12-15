@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.JDBCType;
 import java.util.Set;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -99,13 +100,30 @@ public class ChessPanel extends JPanel {
             repaint();
             if (game.motion(loc1, loc2)) {
                 repaint();
+                if (game.isGameOver()){
+                    if (game.isCheckmate()){
+                        JDialog jDialog = new JDialog();
+                        jDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                        jDialog.setLocationRelativeTo(this);
+                        jDialog.setSize(500, 100);
+                        jDialog.setResizable(false);
+                        JLabel jLabel = new JLabel("Chechmate");
+                        jDialog.add(jLabel);
+
+
+
+
+                        jDialog.setVisible(true);
+
+                    } else {
+
+                    }
+                }
+
             }
             loc1 = null;
             loc2 = null;
         }
-//        if (game.isGameOver()){
-//
-//        }
     }
 
 

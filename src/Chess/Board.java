@@ -23,7 +23,7 @@ public class Board {
                 Piece piece = boardState[x][y];
                 if (piece != null){
                     if (piece.getColor() != color){
-                        for (Location locs : piece.getMoves()){
+                        for (Location locs : piece.getMoves(false)){
                             set.add(locs);
                         }
                     }
@@ -52,7 +52,7 @@ public class Board {
         if (boardState[loc.x][loc.y] == null){
             return null;
         } else {
-            return boardState[loc.x][loc.y].getMoves();
+            return boardState[loc.x][loc.y].getMoves(true);
 
         }
     }
@@ -61,9 +61,9 @@ public class Board {
         return (boardState[loc.x][loc.y].getColor());
     }
 
-    public boolean motion(Location loc1, Location loc2){
+    public void motion(Location loc1, Location loc2){
 
-        if(virtualMotion(loc1, loc2)){
+//        if(virtualMotion(loc1, loc2)){
             Piece piece1 = boardState[loc1.x][loc1.y];
             if (piece1 instanceof King){
                     if (loc1.x + 2 == loc2.x && loc1.y == loc2.y){
@@ -74,9 +74,9 @@ public class Board {
                     }
             }
             step(loc1, loc2);
-            return true;
-        }
-        return false;
+//            return true;
+//        }
+//        return false;
     }
 
     private Piece step(Location loc1, Location loc2){

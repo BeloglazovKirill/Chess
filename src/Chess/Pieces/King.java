@@ -26,7 +26,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves() {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = this.loc.x;
         int y = this.loc.y;
@@ -74,7 +74,9 @@ public class King extends Piece {
                 }
             }
         }
-//        virtualMotion(possibleMoves);
+        if (withVirtualMotion) {
+            virtualMotion(possibleMoves);
+        }
         return possibleMoves;
     }
 

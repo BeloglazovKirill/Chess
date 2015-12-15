@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves() {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         Set<Location> possibleMoves = new HashSet<>();
         int x =  this.loc.x;
         int y =  this.loc.y;
@@ -84,7 +84,9 @@ public class Bishop extends Piece {
                 }
             } else break;
         }
-//        virtualMotion(possibleMoves);
+        if (withVirtualMotion) {
+            virtualMotion(possibleMoves);
+        }
         return possibleMoves;
     }
 }

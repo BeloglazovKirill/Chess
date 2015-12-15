@@ -3,6 +3,7 @@ package Chess.Pieces;
 import Chess.Board;
 import Chess.Location;
 
+import java.util.Iterator;
 import java.util.Set;
 
 public abstract class Piece {
@@ -16,7 +17,7 @@ public abstract class Piece {
         this.loc = loc;
     }
 
-    public abstract Set<Location> getMoves();
+    public abstract Set<Location> getMoves(boolean withVirtualMotion);
 
     public boolean isEmpty(Location loc){
         return boardState.isEmpty(loc);
@@ -46,15 +47,15 @@ public abstract class Piece {
         return isWhite;
     }
 
-//    protected void virtualMotion(Set<Location> possibleMoves){
-//
-//        Iterator <Location> iter = possibleMoves.iterator();
-//
-//        while(iter.hasNext()){
-//            Location locTemp = iter.next();
-//            if (!boardState.virtualMotion(loc, locTemp)){
-//                iter.remove();
-//            }
-//        }
-//    }
+    protected void virtualMotion(Set<Location> possibleMoves){
+
+        Iterator<Location> iter = possibleMoves.iterator();
+
+        while(iter.hasNext()){
+            Location locTemp = iter.next();
+            if (!boardState.virtualMotion(loc, locTemp)){
+                iter.remove();
+            }
+        }
+    }
 }
