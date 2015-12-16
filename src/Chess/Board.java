@@ -64,8 +64,6 @@ public class Board {
     }
 
     public void motion(Location loc1, Location loc2) {
-
-//        if(virtualMotion(loc1, loc2)){
         Piece piece1 = boardState[loc1.x][loc1.y];
         if (piece1 instanceof King) {
             if (loc1.x + 2 == loc2.x && loc1.y == loc2.y) {
@@ -76,9 +74,6 @@ public class Board {
             }
         }
         step(loc1, loc2);
-//            return true;
-//        }
-//        return false;
     }
 
     public boolean pawnCheck() {
