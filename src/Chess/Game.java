@@ -17,7 +17,7 @@ public class Game {
         QUEEN, ROOK, BISHOP, KNIGHT
     }
 
-    Game() {
+    public Game() {
         board = new Board();
         isWhiteTurn = true;
     }
