@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 public abstract class Piece {
-    private boolean isWhite;
-    private Board boardState;
+    private final boolean isWhite;
+    private final Board boardState;
     protected Location loc;
 
     public Piece(boolean isWhite, Board boardState, Location loc){
@@ -35,12 +35,22 @@ public abstract class Piece {
         return boardState.hasCastling(isWhite, isRight);
     }
 
+    public boolean getPawnCheck(){
+        return false;
+    }
+
+    public void setPawnCheck(){
+    }
     public boolean getWasMotion(){
         return true;
     }
 
     public void setLocation(Location loc){
         this.loc = loc;
+    }
+
+    public Location getLocation() {
+        return loc;
     }
 
     public boolean getColor(){
@@ -58,4 +68,21 @@ public abstract class Piece {
             }
         }
     }
+
+    @Override
+    public int hashCode() {
+        int result = (isWhite ? 1 : 0);
+        return result;
+    }
+
+        @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || !(o instanceof Piece)) return false;
+
+        Piece piece = (Piece) o;
+        return loc.equals(piece.loc);
+
+    }
+
 }

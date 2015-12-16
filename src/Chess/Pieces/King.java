@@ -18,7 +18,6 @@ public class King extends Piece {
         return wasMotion;
     }
 
-
     @Override
     public void setLocation(Location loc) {
         super.setLocation(loc);

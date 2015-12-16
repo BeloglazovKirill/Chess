@@ -11,11 +11,12 @@ public class Location {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Location)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Location location = (Location) o;
 
-        return (x == location.x) && (y == location.y);
+        if (x != location.x) return false;
+        return y == location.y;
 
     }
 
@@ -25,4 +26,21 @@ public class Location {
         result = 31 * result + y;
         return result;
     }
+
+    //    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || !(o instanceof Location)) return false;
+//
+//        Location location = (Location) o;
+//
+//        return (x == location.x) && (y == location.y);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = x;
+//        result = 31 * result + y;
+//        return result;
+//    }
 }
