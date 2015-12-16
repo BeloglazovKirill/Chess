@@ -9,7 +9,7 @@ import java.util.*;
 public class King extends Piece {
     private boolean wasMotion = false;
 
-    public King(boolean isWhite, Board boardState, Location loc){
+    public King(boolean isWhite, Board boardState, Location loc) {
         super(isWhite, boardState, loc);
     }
 
@@ -25,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves(boolean withVirtualMotion) {
+    public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = this.loc.x;
         int y = this.loc.y;
@@ -47,25 +47,25 @@ public class King extends Piece {
         if (hasMotion(downRight)) possibleMoves.add(downRight);
         if (hasMotion(down)) possibleMoves.add(down);
         if (hasMotion(downLeft)) possibleMoves.add(downLeft);
-        if (hasMotion(right)){
+        if (hasMotion(right)) {
             possibleMoves.add(right);
-            if (isEmpty(right)){
-                if (!wasMotion){
-                    if (isEmpty(castlingRight)){
-                        if (hasCastling(getColor(), true)){
+            if (isEmpty(right)) {
+                if (!wasMotion) {
+                    if (isEmpty(castlingRight)) {
+                        if (hasCastling(getColor(), true)) {
                             possibleMoves.add(castlingRight);
                         }
                     }
                 }
             }
         }
-        if (hasMotion(left)){
+        if (hasMotion(left)) {
             possibleMoves.add(left);
-            if (isEmpty(left)){
-                if (!wasMotion){
-                    if (isEmpty(castlingLeft)){
-                        if (isEmpty(new Location(x - 3, y))){
-                            if (hasCastling(getColor(), false)){
+            if (isEmpty(left)) {
+                if (!wasMotion) {
+                    if (isEmpty(castlingLeft)) {
+                        if (isEmpty(new Location(x - 3, y))) {
+                            if (hasCastling(getColor(), false)) {
                                 possibleMoves.add(castlingLeft);
                             }
                         }
@@ -74,22 +74,9 @@ public class King extends Piece {
             }
         }
         if (withVirtualMotion) {
-            virtualMotion(possibleMoves);
+            virtualMotion(possibleMoves, thisIsCheck);
         }
         return possibleMoves;
-    }
-
-    private boolean hasMotion(Location loc){
-        if (isValid(loc)){
-            if (isEmpty(loc)){
-                return true;
-            } else {
-                if (getColor() != isWhite(loc)){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
 }

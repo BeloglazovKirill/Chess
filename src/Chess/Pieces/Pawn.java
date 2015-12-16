@@ -7,23 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends Piece {
-    private boolean pawnCheck = false;
     public Pawn (boolean isWhite, Board boardState, Location loc){
         super(isWhite, boardState, loc);
     }
 
     @Override
-    public boolean getPawnCheck() {
-        return pawnCheck;
-    }
-
-    @Override
-    public void setPawnCheck() {
-        pawnCheck = true;
-    }
-
-    @Override
-    public Set<Location> getMoves(boolean withVirtualMotion) {
+    public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = loc.x;
         int y = loc.y;
@@ -36,9 +25,6 @@ public class Pawn extends Piece {
         Location blackLeft = new Location(x - 1, y - 1);
         Location blackRight = new Location(x + 1, y - 1);
         if (getColor()){
-//            if (y == 7){
-//                pawnCheck = true;
-//            }
             if (isValid(whiteUp)){
                 if (isEmpty(whiteUp)){
                     possibleMoves.add(whiteUp);
@@ -64,9 +50,6 @@ public class Pawn extends Piece {
                 }
             }
         } else {
-//            if (y == 0){
-//                pawnCheck = true;
-//            }
             if (isValid(blackDown)){
                 if (isEmpty(blackDown)){
                     possibleMoves.add(blackDown);
@@ -93,7 +76,7 @@ public class Pawn extends Piece {
             }
         }
         if (withVirtualMotion) {
-            virtualMotion(possibleMoves);
+            virtualMotion(possibleMoves, thisIsCheck);
         }
         return possibleMoves;
     }

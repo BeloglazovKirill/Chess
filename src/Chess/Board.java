@@ -10,6 +10,7 @@ import java.util.Set;
 public class Board {
     private Set<Piece> pieceSet = new HashSet<>();
     private Piece[][] boardState = new Piece[8][8];
+    private Piece pawnPopup = null;
 
     public Board() {
         arrange();
@@ -26,7 +27,7 @@ public class Board {
                 Piece piece = boardState[x][y];
                 if (piece != null) {
                     if (piece.getColor() != color) {
-                        for (Location locs : piece.getMoves(false)) {
+                        for (Location locs : piece.getMoves(false, false)) {
                             set.add(locs);
                         }
                     }
@@ -55,7 +56,7 @@ public class Board {
         if (boardState[loc.x][loc.y] == null) {
             return null;
         } else {
-            return boardState[loc.x][loc.y].getMoves(true);
+            return boardState[loc.x][loc.y].getMoves(true, false);
         }
     }
 
@@ -67,88 +68,80 @@ public class Board {
         Piece piece1 = boardState[loc1.x][loc1.y];
         if (piece1 instanceof King) {
             if (loc1.x + 2 == loc2.x && loc1.y == loc2.y) {
-                step(new Location(7, loc1.y), new Location(5, loc1.y), null);
+                step(new Location(7, loc1.y), new Location(5, loc1.y), null, false);
             }
             if (loc1.x - 2 == loc2.x && loc1.y == loc2.y) {
-                step(new Location(0, loc1.y), new Location(3, loc1.y), null);
+                step(new Location(0, loc1.y), new Location(3, loc1.y), null, false);
             }
         }
-        step(loc1, loc2);
+        step(loc1, loc2, false);
     }
 
     public boolean pawnCheck() {
-        for (Piece p : pieceSet) {
-            if (p.getPawnCheck()) {
-                return true;
-            }
+        if (pawnPopup != null){
+            return true;
         }
         return false;
     }
 
 
     public void pawnChange(Game.PieceType pt) {
-        Piece piece = null;
-        Location mainLoc = null;
-        for (Piece p : pieceSet) {
-            if (p.getPawnCheck()) {
-                piece = p;
-                boolean color = p.getColor();
-                Location loc = p.getLocation();
-                mainLoc = loc;
-                switch (pt) {
-                    case QUEEN: {
-                        boardState[loc.x][loc.y] = new Queen(color, this, loc);
-                        break;
-                    }
-                    case ROOK: {
-                        boardState[loc.x][loc.y] = new Rook(color, this, loc);
-                        break;
-                    }
-                    case BISHOP: {
-                        boardState[loc.x][loc.y] = new Bishop(color, this, loc);
-                        break;
-                    }
-                    case KNIGHT: {
-                        boardState[loc.x][loc.y] = new Knight(color, this, loc);
-                        break;
-                    }
-                }
+        boolean color = pawnPopup.getColor();
+        Location loc = pawnPopup.getLocation();
+        switch (pt) {
+            case QUEEN: {
+                boardState[loc.x][loc.y] = new Queen(color, this, loc);
+                break;
+            }
+            case ROOK: {
+                boardState[loc.x][loc.y] = new Rook(color, this, loc);
+                break;
+            }
+            case BISHOP: {
+                boardState[loc.x][loc.y] = new Bishop(color, this, loc);
+                break;
+            }
+            case KNIGHT: {
+                boardState[loc.x][loc.y] = new Knight(color, this, loc);
                 break;
             }
         }
-        pieceSet.remove(piece);
-        pieceSet.add(boardState[mainLoc.x][mainLoc.y]);
+        pieceSet.remove(pawnPopup);
+        pieceSet.add(boardState[loc.x][loc.y]);
+        pawnPopup = null;
     }
 
-    private Piece step(Location loc1, Location loc2) {
-        Piece piece = step(loc1, loc2, null);
+    private Piece step(Location loc1, Location loc2, boolean thisIsCheck) {
+        Piece piece = step(loc1, loc2, null, thisIsCheck);
         Piece tempPiece = boardState[loc2.x][loc2.y];
         if (tempPiece instanceof Pawn && (loc2.y == 0 || loc2.y == 7)) {
-            tempPiece.setPawnCheck();
+            pawnPopup = tempPiece;
         }
         return piece;
     }
 
-    private Piece step(Location loc1, Location loc2, Piece old) {
+    private Piece step(Location loc1, Location loc2, Piece old, boolean thisIsCheck) {
         boardState[loc1.x][loc1.y].setLocation(loc2);
         Piece piece = boardState[loc2.x][loc2.y];
         boardState[loc2.x][loc2.y] = boardState[loc1.x][loc1.y];
         boardState[loc1.x][loc1.y] = old;
-        if (piece != null) {
-            pieceSet.remove(piece);
-        }
-        if (old != null) {
-            pieceSet.add(old);
+        if (!thisIsCheck){
+            if (piece != null) {
+                pieceSet.remove(piece);
+            }
+            if (old != null) {
+                pieceSet.add(old);
+            }
         }
         return piece;
     }
 
 
-    public boolean virtualMotion(Location loc1, Location loc2) {
+    public boolean virtualMotion(Location loc1, Location loc2, boolean thisIsCheck) {
         boolean color = getColorPiece(loc1);
-        Piece piece = step(loc1, loc2, null);
+        Piece piece = step(loc1, loc2, null, thisIsCheck);
         boolean result = virtualCheck(color);
-        step(loc2, loc1, piece);
+        step(loc2, loc1, piece, thisIsCheck);
         return result;
     }
 
@@ -169,7 +162,7 @@ public class Board {
     public boolean hasMoves(boolean isWhite) {
         for (Piece p : pieceSet) {
             if (p.getColor() == isWhite) {
-                if (!p.getMoves(true).isEmpty()) {
+                if (!p.getMoves(true, true).isEmpty()) {
                     return true;
                 }
             }
@@ -263,21 +256,21 @@ public class Board {
                         boardState[x][y] = new Pawn(true, this, new Location(x, y));
                         break;
                     }
-//                    case 6: {
-//                        boardState[x][y] = new Pawn(false, this, new Location(x, y));
-//                        break;
-//                    }
+                    case 6: {
+                        boardState[x][y] = new Pawn(false, this, new Location(x, y));
+                        break;
+                    }
                     case 7: {
                         switch (x) {
                             case 0:
                                 boardState[x][y] = new Rook(false, this, new Location(x, y));
-                                boardState[2][6] = new Pawn(true, this, new Location(2, 6));
+//                                boardState[2][6] = new Pawn(true, this, new Location(2, 6));
                                 break;
                             case 1:
                                 boardState[x][y] = new Knight(false, this, new Location(x, y));
                                 break;
                             case 2:
-//                                boardState[x][y] = new Bishop(false, this, new Location(x, y));
+                                boardState[x][y] = new Bishop(false, this, new Location(x, y));
                                 break;
                             case 3:
                                 boardState[x][y] = new Queen(false, this, new Location(x, y));

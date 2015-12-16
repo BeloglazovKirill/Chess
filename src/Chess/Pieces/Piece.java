@@ -3,6 +3,7 @@ package Chess.Pieces;
 import Chess.Board;
 import Chess.Location;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public abstract class Piece {
         this.loc = loc;
     }
 
-    public abstract Set<Location> getMoves(boolean withVirtualMotion);
+    public abstract Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck);
 
     public boolean isEmpty(Location loc){
         return boardState.isEmpty(loc);
@@ -35,12 +36,6 @@ public abstract class Piece {
         return boardState.hasCastling(isWhite, isRight);
     }
 
-    public boolean getPawnCheck(){
-        return false;
-    }
-
-    public void setPawnCheck(){
-    }
     public boolean getWasMotion(){
         return true;
     }
@@ -57,16 +52,27 @@ public abstract class Piece {
         return isWhite;
     }
 
-    protected void virtualMotion(Set<Location> possibleMoves){
-
-        Iterator<Location> iter = possibleMoves.iterator();
-
-        while(iter.hasNext()){
-            Location locTemp = iter.next();
-            if (!boardState.virtualMotion(loc, locTemp)){
-                iter.remove();
+    protected void virtualMotion(Set<Location> possibleMoves, boolean thisIsCheck){
+        Set<Location> tempSet = new HashSet<>();
+        for (Location tempLoc : possibleMoves) {
+            if (!boardState.virtualMotion(loc, tempLoc, thisIsCheck)) {
+                tempSet.add(tempLoc);
             }
         }
+        possibleMoves.removeAll(tempSet);
+    }
+
+    protected boolean hasMotion(Location loc) {
+        if (isValid(loc)) {
+            if (isEmpty(loc)) {
+                return true;
+            } else {
+                if (getColor() != isWhite(loc)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
