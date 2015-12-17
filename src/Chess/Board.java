@@ -3,7 +3,6 @@ package Chess;
 import Chess.Pieces.*;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -11,6 +10,7 @@ public class Board {
     private Set<Piece> pieceSet = new HashSet<>();
     private Piece[][] boardState = new Piece[8][8];
     private Piece pawnPopup = null;
+    private Piece pawnDoubleStep = null;
 
     public Board() {
         arrange();
@@ -27,7 +27,7 @@ public class Board {
                 Piece piece = boardState[x][y];
                 if (piece != null) {
                     if (piece.getColor() != color) {
-                        for (Location locs : piece.getMoves(false, false)) {
+                        for (Location locs : piece.getMoves(false)) {
                             set.add(locs);
                         }
                     }
@@ -47,12 +47,11 @@ public class Board {
         return false;
     }
 
-    public boolean getPawnColor(Location loc) {
-        return boardState[loc.x][loc.y].getColor();
-    }
-
     public boolean getPawnDoubleStep(Location loc) {
-        return boardState[loc.x][loc.y].getIsDoubleStep();
+        if (pawnDoubleStep != null && pawnDoubleStep.getLocation().equals(loc)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isValid(Location loc) {
@@ -69,7 +68,7 @@ public class Board {
         if (boardState[loc.x][loc.y] == null) {
             return null;
         } else {
-            return boardState[loc.x][loc.y].getMoves(true, false);
+            return boardState[loc.x][loc.y].getMoves(true);
         }
     }
 
@@ -81,10 +80,10 @@ public class Board {
         Piece piece1 = boardState[loc1.x][loc1.y];
         if (piece1 instanceof King) {
             if (loc1.x + 2 == loc2.x && loc1.y == loc2.y) {
-                step(new Location(7, loc1.y), new Location(5, loc1.y), null, false);
+                step(new Location(7, loc1.y), new Location(5, loc1.y));
             }
             if (loc1.x - 2 == loc2.x && loc1.y == loc2.y) {
-                step(new Location(0, loc1.y), new Location(3, loc1.y), null, false);
+                step(new Location(0, loc1.y), new Location(3, loc1.y));
             }
         }
         if (piece1 instanceof Pawn) {
@@ -100,7 +99,7 @@ public class Board {
                 }
             }
         }
-        step(loc1, loc2, false);
+        step(loc1, loc2);
     }
 
     public boolean pawnCheck() {
@@ -137,37 +136,41 @@ public class Board {
         pawnPopup = null;
     }
 
-    private Piece step(Location loc1, Location loc2, boolean thisIsCheck) {
-        Piece piece = step(loc1, loc2, null, thisIsCheck);
-        Piece tempPiece = boardState[loc2.x][loc2.y];
-        if (tempPiece instanceof Pawn && (loc2.y == 0 || loc2.y == 7)) {
-            pawnPopup = tempPiece;
+    private void step(Location loc1, Location loc2) {
+        boardState[loc1.x][loc1.y].step(loc2);
+        Piece piece = boardState[loc2.x][loc2.y];
+        boardState[loc2.x][loc2.y] = boardState[loc1.x][loc1.y];
+        boardState[loc1.x][loc1.y] = null;
+        if (piece != null) {
+            pieceSet.remove(piece);
         }
-        return piece;
+        Piece tempPiece = boardState[loc2.x][loc2.y];
+        pawnDoubleStep = null;
+        if (tempPiece instanceof Pawn) {
+            if (loc2.y == 0 || loc2.y == 7){
+                pawnPopup = tempPiece;
+            }
+            if (Math.abs(loc2.y - loc1.y) == 2){
+                pawnDoubleStep = tempPiece;
+            }
+        }
+
     }
 
-    private Piece step(Location loc1, Location loc2, Piece old, boolean thisIsCheck) {
+    private Piece virtualStep(Location loc1, Location loc2, Piece old) {
         boardState[loc1.x][loc1.y].setLocation(loc2);
         Piece piece = boardState[loc2.x][loc2.y];
         boardState[loc2.x][loc2.y] = boardState[loc1.x][loc1.y];
         boardState[loc1.x][loc1.y] = old;
-        if (!thisIsCheck) {
-            if (piece != null) {
-                pieceSet.remove(piece);
-            }
-            if (old != null) {
-                pieceSet.add(old);
-            }
-        }
         return piece;
     }
 
 
-    public boolean virtualMotion(Location loc1, Location loc2, boolean thisIsCheck) {
+    public boolean virtualMotion(Location loc1, Location loc2) {
         boolean color = getColorPiece(loc1);
-        Piece piece = step(loc1, loc2, null, thisIsCheck);
+        Piece piece = virtualStep(loc1, loc2, null);
         boolean result = virtualCheck(color);
-        step(loc2, loc1, piece, thisIsCheck);
+        virtualStep(loc2, loc1, piece);
         return result;
     }
 
@@ -188,7 +191,7 @@ public class Board {
     public boolean hasMoves(boolean isWhite) {
         for (Piece p : pieceSet) {
             if (p.getColor() == isWhite) {
-                if (!p.getMoves(true, true).isEmpty()) {
+                if (!p.getMoves(true).isEmpty()) {
                     return true;
                 }
             }
@@ -242,7 +245,11 @@ public class Board {
     }
 
     private boolean wasMotion(Location loc) {
-        return boardState[loc.x][loc.y].getWasMotion();
+        Piece piece = boardState[loc.x][loc.y];
+        if (piece instanceof Rook) {
+            return ((Rook) piece).getWasMotion();
+        }
+        return false;
     }
 
     private void arrange() {

@@ -4,12 +4,11 @@ import Chess.Board;
 import Chess.Location;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public abstract class Piece {
     private final boolean isWhite;
-    private final Board boardState;
+    protected final Board boardState;
     protected Location loc;
 
     public Piece(boolean isWhite, Board boardState, Location loc){
@@ -18,23 +17,7 @@ public abstract class Piece {
         this.loc = loc;
     }
 
-    public boolean getIsDoubleStep(){
-        return false;
-    }
-
-    protected boolean isPawn(Location loc){
-        return boardState.isPawn(loc);
-    }
-
-    protected boolean getPawnColor(Location loc){
-        return boardState.getPawnColor(loc);
-    }
-
-    protected boolean getPawnDoubleStep(Location loc){
-        return boardState.getPawnDoubleStep(loc);
-    }
-
-    public abstract Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck);
+    public abstract Set<Location> getMoves(boolean withVirtualMotion);
 
     public boolean isEmpty(Location loc){
         return boardState.isEmpty(loc);
@@ -52,8 +35,8 @@ public abstract class Piece {
         return boardState.hasCastling(isWhite, isRight);
     }
 
-    public boolean getWasMotion(){
-        return true;
+    public void step(Location loc){
+        this.loc = loc;
     }
 
     public void setLocation(Location loc){
@@ -68,10 +51,10 @@ public abstract class Piece {
         return isWhite;
     }
 
-    protected void virtualMotion(Set<Location> possibleMoves, boolean thisIsCheck){
+    protected void virtualMotion(Set<Location> possibleMoves){
         Set<Location> tempSet = new HashSet<>();
         for (Location tempLoc : possibleMoves) {
-            if (!boardState.virtualMotion(loc, tempLoc, thisIsCheck)) {
+            if (!boardState.virtualMotion(loc, tempLoc)) {
                 tempSet.add(tempLoc);
             }
         }

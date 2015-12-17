@@ -12,7 +12,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         int x = loc.x;
         int y = loc.y;
         Set<Location> possibleMoves = new HashSet<>();
@@ -31,7 +31,7 @@ public class Knight extends Piece {
             if (hasMotion(moves[i])) possibleMoves.add(moves[i]);
         }
         if (withVirtualMotion) {
-            virtualMotion(possibleMoves, thisIsCheck);
+            virtualMotion(possibleMoves);
         }
         return possibleMoves;
     }

@@ -12,19 +12,18 @@ public class Rook extends Piece {
         super(isWhite, boardState, loc);
     }
 
-    @Override
     public boolean getWasMotion() {
         return wasMotion;
     }
 
     @Override
-    public void setLocation(Location loc) {
-        super.setLocation(loc);
+    public void step(Location loc) {
+        super.step(loc);
         wasMotion = true;
     }
 
     @Override
-    public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = this.loc.x;
         int y = this.loc.y;
@@ -68,7 +67,7 @@ public class Rook extends Piece {
             } else break;
         }
         if (withVirtualMotion) {
-            virtualMotion(possibleMoves, thisIsCheck);
+            virtualMotion(possibleMoves);
         }
         return possibleMoves;
     }

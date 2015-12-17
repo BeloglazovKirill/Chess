@@ -10,14 +10,6 @@ public class Pawn extends Piece {
     public Pawn (boolean isWhite, Board boardState, Location loc){
         super(isWhite, boardState, loc);
     }
-    private boolean isDoubleStep = false;
-
-
-
-    @Override
-    public boolean getIsDoubleStep() {
-        return isDoubleStep;
-    }
 
     private boolean hasMotion(Location loc, boolean color) {
         if (isValid(loc)){
@@ -39,9 +31,9 @@ public class Pawn extends Piece {
     private boolean hittenStep(Location loc1, Location loc2, Location loc3){
         if (isValid(loc1)){
             if (!isEmpty(loc1) && isEmpty(loc2) && isEmpty(loc3)){
-                if (isPawn(loc1)){
-                    if (getPawnColor(loc1) != getColor()){
-                        if (getPawnDoubleStep(loc1)){
+                if (boardState.isPawn(loc1)){
+                    if (isWhite(loc1) != getColor()){
+                        if (boardState.getPawnDoubleStep(loc1)){
                             return true;
                         }
                     }
@@ -52,7 +44,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
+    public Set<Location> getMoves(boolean withVirtualMotion) {
         Set<Location> possibleMoves = new HashSet<>();
         int x = loc.x;
         int y = loc.y;
@@ -71,7 +63,6 @@ public class Pawn extends Piece {
                     if (y == 1){
                         if (isEmpty(white2Up)){
                             possibleMoves.add(white2Up);
-                            isDoubleStep = true;
                         }
                     }
                 }
@@ -96,7 +87,6 @@ public class Pawn extends Piece {
                     if (y == 6){
                         if (isEmpty(black2Down)){
                             possibleMoves.add(black2Down);
-                            isDoubleStep = true;
                         }
                     }
                 }
@@ -115,7 +105,7 @@ public class Pawn extends Piece {
             }
         }
         if (withVirtualMotion) {
-            virtualMotion(possibleMoves, thisIsCheck);
+            virtualMotion(possibleMoves);
         }
         return possibleMoves;
     }
