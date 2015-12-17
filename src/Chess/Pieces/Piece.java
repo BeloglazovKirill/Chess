@@ -18,6 +18,22 @@ public abstract class Piece {
         this.loc = loc;
     }
 
+    public boolean getIsDoubleStep(){
+        return false;
+    }
+
+    protected boolean isPawn(Location loc){
+        return boardState.isPawn(loc);
+    }
+
+    protected boolean getPawnColor(Location loc){
+        return boardState.getPawnColor(loc);
+    }
+
+    protected boolean getPawnDoubleStep(Location loc){
+        return boardState.getPawnDoubleStep(loc);
+    }
+
     public abstract Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck);
 
     public boolean isEmpty(Location loc){

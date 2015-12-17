@@ -29,7 +29,6 @@ public class King extends Piece {
         Set<Location> possibleMoves = new HashSet<>();
         int x = this.loc.x;
         int y = this.loc.y;
-
         Location upLeft = new Location(x - 1, y + 1);
         Location up = new Location(x, y + 1);
         Location upRight = new Location(x + 1, y + 1);

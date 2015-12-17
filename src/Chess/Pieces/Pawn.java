@@ -10,6 +10,46 @@ public class Pawn extends Piece {
     public Pawn (boolean isWhite, Board boardState, Location loc){
         super(isWhite, boardState, loc);
     }
+    private boolean isDoubleStep = false;
+
+
+
+    @Override
+    public boolean getIsDoubleStep() {
+        return isDoubleStep;
+    }
+
+    private boolean hasMotion(Location loc, boolean color) {
+        if (isValid(loc)){
+            if (!isEmpty(loc)){
+                if (color){
+                    if (!isWhite(loc)){
+                        return true;
+                    }
+                } else {
+                    if (isWhite(loc)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean hittenStep(Location loc1, Location loc2, Location loc3){
+        if (isValid(loc1)){
+            if (!isEmpty(loc1) && isEmpty(loc2) && isEmpty(loc3)){
+                if (isPawn(loc1)){
+                    if (getPawnColor(loc1) != getColor()){
+                        if (getPawnDoubleStep(loc1)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     public Set<Location> getMoves(boolean withVirtualMotion, boolean thisIsCheck) {
@@ -31,23 +71,23 @@ public class Pawn extends Piece {
                     if (y == 1){
                         if (isEmpty(white2Up)){
                             possibleMoves.add(white2Up);
+                            isDoubleStep = true;
                         }
                     }
                 }
             }
-            if (isValid(whiteLeft)){
-                if (!isEmpty(whiteLeft)){
-                    if (!isWhite(whiteLeft)){
-                        possibleMoves.add(whiteLeft);
-                    }
-                }
-            }
-            if (isValid(whiteRight)){
-                if (!isEmpty(whiteRight)){
-                    if (!isWhite(whiteRight)){
-                        possibleMoves.add(whiteRight);
-                    }
-                }
+            if (hasMotion(whiteLeft, true)) possibleMoves.add(whiteLeft);
+            if (hasMotion(whiteRight, true)) possibleMoves.add(whiteRight);
+
+            if (y == 4){
+                Location tempLoc = new Location(x - 1, y);
+                Location tempLoc2 = new Location(x - 1, y + 1);
+                Location tempLoc3 = new Location(x - 1, y + 2);
+                if (hittenStep(tempLoc, tempLoc2, tempLoc3)) possibleMoves.add(tempLoc2);
+                tempLoc = new Location(x + 1, y);
+                tempLoc2 = new Location(x + 1, y + 1);
+                tempLoc3 = new Location(x + 1, y + 2);
+                if (hittenStep(tempLoc, tempLoc2, tempLoc3)) possibleMoves.add(tempLoc2);
             }
         } else {
             if (isValid(blackDown)){
@@ -56,23 +96,22 @@ public class Pawn extends Piece {
                     if (y == 6){
                         if (isEmpty(black2Down)){
                             possibleMoves.add(black2Down);
+                            isDoubleStep = true;
                         }
                     }
                 }
             }
-            if (isValid(blackLeft)){
-                if (!isEmpty(blackLeft)){
-                    if (isWhite(blackLeft)){
-                        possibleMoves.add(blackLeft);
-                    }
-                }
-            }
-            if (isValid(blackRight)){
-                if (!isEmpty(blackRight)){
-                    if (isWhite(blackRight)){
-                        possibleMoves.add(blackRight);
-                    }
-                }
+            if (hasMotion(blackLeft, false)) possibleMoves.add(blackLeft);
+            if (hasMotion(blackRight, false)) possibleMoves.add(blackRight);
+            if (y == 3){
+                Location tempLoc = new Location(x - 1, y);
+                Location tempLoc2 = new Location(x - 1, y - 1);
+                Location tempLoc3 = new Location(x - 1, y - 2);
+                if (hittenStep(tempLoc, tempLoc2, tempLoc3)) possibleMoves.add(tempLoc2);
+                tempLoc = new Location(x + 1, y);
+                tempLoc2 = new Location(x + 1, y - 1);
+                tempLoc3 = new Location(x + 1, y - 2);
+                if (hittenStep(tempLoc, tempLoc2, tempLoc3)) possibleMoves.add(tempLoc2);
             }
         }
         if (withVirtualMotion) {

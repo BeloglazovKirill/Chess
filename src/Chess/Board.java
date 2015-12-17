@@ -42,6 +42,19 @@ public class Board {
         return false;
     }
 
+    public boolean isPawn(Location loc) {
+        if (boardState[loc.x][loc.y] instanceof Pawn) return true;
+        return false;
+    }
+
+    public boolean getPawnColor(Location loc) {
+        return boardState[loc.x][loc.y].getColor();
+    }
+
+    public boolean getPawnDoubleStep(Location loc) {
+        return boardState[loc.x][loc.y].getIsDoubleStep();
+    }
+
     public boolean isValid(Location loc) {
         if (loc.x >= 0 && loc.x <= 7 && loc.y >= 0 && loc.y <= 7) return true;
         return false;
@@ -74,11 +87,24 @@ public class Board {
                 step(new Location(0, loc1.y), new Location(3, loc1.y), null, false);
             }
         }
+        if (piece1 instanceof Pawn) {
+            if (isEmpty(loc2)) {
+                if ((loc1.x - 1 == loc2.x && loc1.y + 1 == loc2.y) || (loc1.x - 1 == loc2.x && loc1.y - 1 == loc2.y)) {
+                    pieceSet.remove(boardState[loc1.x - 1][loc1.y]);
+                    boardState[loc1.x - 1][loc1.y] = null;
+
+                }
+                if ((loc1.x + 1 == loc2.x && loc1.y + 1 == loc2.y) || (loc1.x + 1 == loc2.x && loc1.y - 1 == loc2.y)) {
+                    pieceSet.remove(boardState[loc1.x + 1][loc1.y]);
+                    boardState[loc1.x + 1][loc1.y] = null;
+                }
+            }
+        }
         step(loc1, loc2, false);
     }
 
     public boolean pawnCheck() {
-        if (pawnPopup != null){
+        if (pawnPopup != null) {
             return true;
         }
         return false;
@@ -125,7 +151,7 @@ public class Board {
         Piece piece = boardState[loc2.x][loc2.y];
         boardState[loc2.x][loc2.y] = boardState[loc1.x][loc1.y];
         boardState[loc1.x][loc1.y] = old;
-        if (!thisIsCheck){
+        if (!thisIsCheck) {
             if (piece != null) {
                 pieceSet.remove(piece);
             }
@@ -264,7 +290,6 @@ public class Board {
                         switch (x) {
                             case 0:
                                 boardState[x][y] = new Rook(false, this, new Location(x, y));
-//                                boardState[2][6] = new Pawn(true, this, new Location(2, 6));
                                 break;
                             case 1:
                                 boardState[x][y] = new Knight(false, this, new Location(x, y));
