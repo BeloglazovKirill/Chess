@@ -1,7 +1,7 @@
 package Chess.Pieces;
 
-import Chess.Board;
-import Chess.Location;
+import Chess.GamingTools.Board;
+import Chess.GamingTools.Location;
 
 import java.util.*;
 

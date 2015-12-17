@@ -1,5 +1,7 @@
 package Chess;
 
+import Chess.GamingTools.Game;
+import Chess.GamingTools.Location;
 import Chess.Pieces.*;
 
 import javax.imageio.ImageIO;
@@ -8,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.JDBCType;
 import java.util.Set;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -22,6 +23,7 @@ public class ChessPanel extends JPanel {
     private Set<Location> possibleMoves;
     private Point point = new Point();
     private Map<String, Image> images = new HashMap<>();
+    private Image background;
 
     public ChessPanel() {
 
@@ -30,12 +32,11 @@ public class ChessPanel extends JPanel {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
+
                 int y = 7 - e.getY() / dimension;
                 int x = e.getX() / dimension;
                 if (x >= 0 && x <= 7 && y >= 0 && y <= 7) {
@@ -65,6 +66,7 @@ public class ChessPanel extends JPanel {
                 images.put("black" + name, ImageIO.read(new File("src/images/black" + name + ".png")));
                 images.put("white" + name, ImageIO.read(new File("src/images/white" + name + ".png")));
             }
+            background = ImageIO.read(new File("src/images/background.png"));
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -198,18 +200,13 @@ public class ChessPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         dimension = getWidth() > getHeight() ? getHeight() / 8 : getWidth() / 8;
-        g.setColor(Color.black);
-        for (int i = 0; i < 9; i++) {
-            g.drawLine(0, i * dimension, 8 * dimension, i * dimension);
-            g.drawLine(i * dimension, 0, i * dimension, 8 * dimension);
-        }
+        g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         if (possibleMoves != null) {
             g.setColor(Color.RED);
             for (Location temp : possibleMoves) {
                 g.drawRect(temp.x * dimension, (7 - temp.y) * dimension, dimension, dimension);
             }
         }
-
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 Piece piece = game.getPiece(new Location(x, 7 - y));

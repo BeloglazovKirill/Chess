@@ -1,4 +1,4 @@
-package Chess;
+package Chess.GamingTools;
 
 import Chess.Pieces.Piece;
 
@@ -58,12 +58,9 @@ public class Game {
         if (possibleMoves != null && isWhiteTurn(loc1)) {
             for (Location temp : possibleMoves) {
                 if (temp.equals(loc2)) {
-//                    if (board.motion(loc1, loc2)){
                     board.motion(loc1, loc2);
-
                     isWhiteTurn = !isWhiteTurn;
                     return true;
-//                    }
                 }
             }
         }

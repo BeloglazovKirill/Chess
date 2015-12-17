@@ -1,4 +1,4 @@
-package Chess;
+package Chess.GamingTools;
 
 import Chess.Pieces.*;
 
