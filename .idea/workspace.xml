@@ -2,32 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09fa4ce1-c94a-4395-8ab4-d0eef5889c81" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/images/background.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Chess/Board.java" afterPath="$PROJECT_DIR$/src/Chess/GamingTools/Board.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Chess/Game.java" afterPath="$PROJECT_DIR$/src/Chess/GamingTools/Game.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Chess/Location.java" afterPath="$PROJECT_DIR$/src/Chess/GamingTools/Location.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackBishop.png" afterPath="$PROJECT_DIR$/src/images/blackBishop.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackKing.png" afterPath="$PROJECT_DIR$/src/images/blackKing.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackKnight.png" afterPath="$PROJECT_DIR$/src/images/blackKnight.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackPawn.png" afterPath="$PROJECT_DIR$/src/images/blackPawn.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackQueen.png" afterPath="$PROJECT_DIR$/src/images/blackQueen.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/blackRook.png" afterPath="$PROJECT_DIR$/src/images/blackRook.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whiteBishop.png" afterPath="$PROJECT_DIR$/src/images/whiteBishop.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whiteKing.png" afterPath="$PROJECT_DIR$/src/images/whiteKing.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whiteKnight.png" afterPath="$PROJECT_DIR$/src/images/whiteKnight.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whitePawn.png" afterPath="$PROJECT_DIR$/src/images/whitePawn.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whiteQueen.png" afterPath="$PROJECT_DIR$/src/images/whiteQueen.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/images/whiteRook.png" afterPath="$PROJECT_DIR$/src/images/whiteRook.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Bishop.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Bishop.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/ChessPanel.java" afterPath="$PROJECT_DIR$/src/Chess/ChessPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/King.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/King.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Knight.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Knight.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Pawn.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Pawn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Piece.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Piece.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Queen.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Queen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Chess/Pieces/Rook.java" afterPath="$PROJECT_DIR$/src/Chess/Pieces/Rook.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MyChess.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,8 +57,8 @@
       <file leaf-file-name="ChessPanel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Chess/ChessPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49333334">
-              <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.6268882">
+              <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -168,9 +143,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="100" />
     <option name="width" value="1440" />
-    <option name="height" value="785" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -303,7 +277,7 @@
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
     <property name="dynamic.classpath" value="false" />
-    <property name="FullScreen" value="false" />
+    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -501,7 +475,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="100" y="0" width="1440" height="785" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -512,7 +486,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297414" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1517341" sideWeight="0.49425286" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12665862" sideWeight="0.49425286" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23850575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -918,8 +892,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Chess/ChessPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49333334">
-          <caret line="29" column="22" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.6268882">
+          <caret line="213" column="39" selection-start-line="213" selection-start-column="39" selection-end-line="213" selection-end-column="39" />
           <folding />
         </state>
       </provider>

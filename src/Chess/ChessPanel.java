@@ -201,8 +201,8 @@ public class ChessPanel extends JPanel {
         super.paint(g);
         dimension = getWidth() > getHeight() ? getHeight() / 8 : getWidth() / 8;
         g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+        g.setColor(Color.RED);
         if (possibleMoves != null) {
-            g.setColor(Color.RED);
             for (Location temp : possibleMoves) {
                 g.drawRect(temp.x * dimension, (7 - temp.y) * dimension, dimension, dimension);
             }
