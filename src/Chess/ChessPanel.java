@@ -200,9 +200,14 @@ public class ChessPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         dimension = getWidth() > getHeight() ? getHeight() / 8 : getWidth() / 8;
-        g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-        g.setColor(Color.RED);
+        g.drawImage(background, 0, 0, 8 * dimension, 8 * dimension, null);
+        g.setColor(Color.BLACK);
+        for (int i = 0; i < 9; i++) {
+            g.drawLine(0, i * dimension, 8 * dimension, i * dimension);
+            g.drawLine(i * dimension, 0, i * dimension, 8 * dimension);
+        }
         if (possibleMoves != null) {
+            g.setColor(Color.RED);
             for (Location temp : possibleMoves) {
                 g.drawRect(temp.x * dimension, (7 - temp.y) * dimension, dimension, dimension);
             }
