@@ -110,6 +110,7 @@ public class ChessPanel extends JPanel {
                     GridBagLayout g = new GridBagLayout();
                     GridBagConstraints cq = new GridBagConstraints();
                     pawnDialog.setLayout(g);
+                    pawnDialog.setAlwaysOnTop(true);
                     JButton[] jButtons = new JButton[4];
                     jButtons[0] = new JButton("КОРОЛЕВА");
 
@@ -185,6 +186,7 @@ public class ChessPanel extends JPanel {
                     jDialog.add(jLabel);
                     jDialog.setLocationRelativeTo(this);
                     jDialog.setVisible(true);
+                    jDialog.setAlwaysOnTop(true);
                 }
             }
             loc1 = null;
